@@ -53,6 +53,15 @@ function Hero() {
     { name: 'AWS', icon: <FaCloud />, color: 'text-amber-400' }
   ];
 
+  const particles = Array.from({ length: 15 }, (_, i) => ({
+  id: i,
+  left: Math.random() * 100,
+  top: Math.random() * 100,
+  duration: 3 + Math.random() * 2,
+  delay: Math.random() * 5,
+  size: Math.random() * 2 + 1 // Vary the size
+}));
+
   return (
     <section className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 py-12 lg:py-0 overflow-hidden">
       
@@ -65,26 +74,29 @@ function Hero() {
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f1e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f1e_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,#000_70%,transparent_100%)]" />
         
         {/* Floating Particles */}
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-[1px] h-[1px] bg-cyan-500/30 rounded-full"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [0, -100, 0],
-              opacity: [0, 1, 0],
-              scale: [0, 1, 0]
-            }}
-            transition={{
-              duration: 3 + Math.random() * 2,
-              repeat: Infinity,
-              delay: Math.random() * 5
-            }}
-          />
-        ))}
+        {particles.map((particle) => (
+  <motion.div
+    key={particle.id}
+    className="absolute bg-cyan-500/20 rounded-full"
+    style={{
+      left: `${particle.left}%`,
+      top: `${particle.top}%`,
+      width: `${particle.size}px`,
+      height: `${particle.size}px`,
+    }}
+    animate={{
+      y: [0, -150, 0],
+      opacity: [0, 0.8, 0],
+      scale: [0, 1.5, 0]
+    }}
+    transition={{
+      duration: particle.duration,
+      repeat: Infinity,
+      ease: "easeInOut",
+      delay: particle.delay
+    }}
+  />
+))}
         
         {/* Glowing Orbs */}
         <motion.div 
